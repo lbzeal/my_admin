@@ -4,7 +4,10 @@ const router = new SMERouter('router-view' , 'hash');
 
 import Home from '../controller/home';
 import Table from '../controller/table';
-import activeNav from '../utils/activeNav'
+import activeNav from '../utils/activeNav';
+import User from '../controller/user';
+
+User.render();
 
 router.use(activeNav)
 router.redirect('/');

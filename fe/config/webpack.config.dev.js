@@ -50,7 +50,7 @@
             },
             {
                 test : /\.(scss)|(css)$/,
-                loader : ['style-loader','css-loader','sacc-loader']
+                loader : ['style-loader','css-loader','sass-loader']
             }
         ]
     }

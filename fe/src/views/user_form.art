@@ -1,0 +1,47 @@
+{{if !log}}
+
+<form role="form" id="form-board">
+    <div class="form-group has-success">
+        <label class="control-label" for="inputSuccess">用户名</label>
+        <input type="text" class="form-control" id="inputName">
+    </div>
+    <div class="form-group has-warning">
+        <label class="control-label" for="inputWarning">密码</label>
+        <input type="text" class="form-control" id="inputPasswo">
+    </div>
+    <div class="form-group has-error">
+        <label class="control-label" for="inputError">邮箱</label>
+        <input type="text" class="form-control" id="inputEmail">
+    </div>
+    <div class="form-group has-error">
+        <input type="text" class="form-control" id="inputMa">
+        <span href="#" class="btn btn-primary btn-sm">获取验证码</span>
+    </div>
+</form>
+<li class="divider"></li>
+<li>
+    <span href="#" class="btn btn-primary btn-sm" id="back">返回</span>
+    <span href="#" class="btn btn-primary btn-sm" id="send">提交</span>
+</li>
+
+
+{{else}}
+
+<form role="form" id="form-board">
+    <div class="form-group has-success">
+        <label class="control-label" for="inputSuccess">用户名</label>
+        <input type="text" class="form-control" id="inputName">
+    </div>
+    <div class="form-group has-warning">
+        <label class="control-label" for="inputWarning">密码</label>
+        <input type="text" class="form-control" id="inputPasswo">
+    </div>
+</form>
+<li class="divider"></li>
+<li>
+    <span href="#" class="btn btn-primary btn-sm" id="back">返回</span>
+    <span href="#" class="btn btn-primary btn-sm" id="send">登录</span>
+</li>
+
+
+{{/if}}
