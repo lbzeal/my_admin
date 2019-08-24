@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            首页 <small>信息管理系统</small>
+        </h1>
+        <pre>
+           欢迎使用本系统，系统架构：
+           项目技术栈
+
+           前端:
+           Webpack
+           Admin-lte(bootstrap)
+           jQuery
+           SME-Router  
+           
+           后端:
+           Node.js
+           Express
+           Ejs
+           MongoDB
+           mongoose
+           bcrypt
+           moment 格式化时间;
+           
+         </pre>
+    </div>
+</div>
+</div>
