@@ -15,7 +15,7 @@ module.exports = {
             req.session.ma = ma_content;
 
             //发送邮件;
-            // emailer.sendEmail(email_address,ma_content);
+            emailer.sendEmail(email_address,ma_content);
             console.log(ma_content);
             res.render('succ', {
                 data: JSON.stringify({
@@ -58,9 +58,11 @@ module.exports = {
         let result = await userModel.findOne(username);
         if (result) {
             if (await psdConfim.compare(password, result.password)) {
+                req.session.username = username;
                 res.render('succ', {
                     data: JSON.stringify({
-                        msg: '登录成功'
+                        msg: '登录成功',
+                        username,
                     })
                 })
             } else {
@@ -77,5 +79,35 @@ module.exports = {
                 })
             })
         }
+    },
+    async isSignin(req,res,next){
+        res.set('content-type','application/json;charset=utf-8');
+        let username = req.session.username;
+        if(username){
+            res.render('succ',{
+                data : JSON.stringify({
+                    msg : '用户有权限',
+                    username,
+                })
+            })
+        }else{
+            res.render('fail',{
+                data : JSON.stringify({
+                    msg : '没有权限',
+                })
+            })
+        }
+
+    },
+    async signout (req,res,next){
+        res.set('content-type','application/json;charset=utf-8');
+        req.session.username = '';
+        res.render('succ',{
+            data : JSON.stringify({
+                msg : '退出成功',
+            })
+        })
+
+
     }
 }

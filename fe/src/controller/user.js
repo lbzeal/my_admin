@@ -3,10 +3,12 @@ import userFormView from '../views/user_form.art';
 
 
 export default {
-    render() {
+    async render() {
+        let result = await this.isSignin();
+        console.log(result);
         let html = userView({
-            login: false,
-            username: '胖虎',
+            login: result.ret,
+            username: result.data.username,
         });
         $('#sign-menu').html(html);
         this.renderBtnBand();
@@ -33,26 +35,31 @@ export default {
         $('.dropdown-user').on('click', '#getMa', () => {
             let email_value = $('#inputEmail').val();
             $.ajax({
-                url : '/api/users/email',
+                url: '/api/users/email',
                 type: 'POST',
-                data : {
-                   email: email_value,
+                data: {
+                    email: email_value,
                 },
-                success(result){
+                success(result) {
                     console.log(result);
                 }
             })
-            
+
         })
         $('.dropdown-user').on('click', '#send', () => {
             let data = $('#form-board').serialize();
             console.log(data);
             $.ajax({
-                url : '/api/users/signup',
-                type : 'POST',
+                url: '/api/users/signup',
+                type: 'POST',
                 data,
-                success(result){
+                success(result) {
                     console.log(result);
+                    if (result.ret) {
+                        alert(result.data.msg);
+                    } else {
+                        alert(result.data.msg)
+                    }
                 }
             })
         })
@@ -60,13 +67,42 @@ export default {
             let data = $('#form-board').serialize();
             console.log(data);
             $.ajax({
-                url : '/api/users/signin',
-                type : 'POST',
+                url: '/api/users/signin',
+                type: 'POST',
                 data,
-                success(result){
+                success(result) {
                     console.log(result);
+                    if (result.ret) {
+                        let html = userView({
+                            login: result.ret,
+                            username: result.data.username,
+                        });
+                        $('#sign-menu').html(html);
+                    } else {
+                        alert(result.data.msg)
+                    }
                 }
             })
+        })
+        $('.top-navbar').on('click','#btn-signout',()=>{
+            $.ajax({
+                url: '/api/users/signout',
+                type: 'GET',
+                success(result) {
+                    console.log(result);
+                    location.reload();
+                }
+            })
+        })
+    },
+
+    isSignin() {
+        return $.ajax({
+            url: '/api/users/isSignin',
+            type: 'GET',
+            success(result) {
+                return result;
+            }
         })
     }
 }

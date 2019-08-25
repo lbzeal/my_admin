@@ -12,7 +12,7 @@
 
 </a>
 <ul class="dropdown-menu dropdown-user" id="out-board">
-    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+    <li id="btn-signout"><a href="#"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
     </li>
 </ul>
 
