@@ -56,5 +56,17 @@ export default {
                 }
             })
         })
+        $('.dropdown-user').on('click', '#send-login', () => {
+            let data = $('#form-board').serialize();
+            console.log(data);
+            $.ajax({
+                url : '/api/users/signin',
+                type : 'POST',
+                data,
+                success(result){
+                    console.log(result);
+                }
+            })
+        })
     }
 }
