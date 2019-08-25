@@ -46,7 +46,15 @@ export default {
         })
         $('.dropdown-user').on('click', '#send', () => {
             let data = $('#form-board').serialize();
-            console.log(data)
+            console.log(data);
+            $.ajax({
+                url : '/api/users/signup',
+                type : 'POST',
+                data,
+                success(result){
+                    console.log(result);
+                }
+            })
         })
     }
 }

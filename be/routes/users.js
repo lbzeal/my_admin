@@ -5,6 +5,6 @@ const users = require('../controller/user');
 
 /* GET users listing. */
 router.post('/email', users.resolveMa);
-// router.post('/register',users.confirmMa,users.register)
+router.post('/signup',users.resolveMa);
 
 module.exports = router;
