@@ -5,21 +5,15 @@
         </h1>
         <div class="panel panel-default">
             <div class="panel-heading">
-                Advanced Tables
+                数据管理
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="dataTables_length" id="dataTables-example_length"><label><select
-                                            name="dataTables-example_length" aria-controls="dataTables-example"
-                                            class="form-control input-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select> records per page</label></div>
+                                <button id="addbtn" class="btn btn-block btn-success"><span
+                                        class="fa fa-plus-circle"></span> 添加</button>
                             </div>
                             <div class="col-sm-6">
                                 <div id="dataTables-example_filter" class="dataTables_filter"><label>Search:<input
@@ -31,50 +25,74 @@
                             id="dataTables-example" aria-describedby="dataTables-example_info">
                             <thead>
                                 <tr role="row">
+                                    <th style="width: 10px">#</th>
                                     <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Rendering engine: activate to sort column ascending"
-                                        style="width: 196px;">Rendering engine</th>
+                                        style="width: 196px;">公司logo</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-label="Browser: activate to sort column ascending"
-                                        style="width: 303px;">Browser</th>
+                                        style="width: 200px;">公司名称</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-label="Platform(s): activate to sort column ascending"
-                                        style="width: 274px;">Platform(s)</th>
+                                        style="width: 274px;">职位名称(s)</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-label="Engine version: activate to sort column ascending"
-                                        style="width: 166px;">Engine version</th>
+                                        style="width: 166px;">发布时间</th>
                                     <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-label="CSS grade: activate to sort column ascending"
-                                        style="width: 117px;">CSS grade</th>
+                                        style="width: 117px;">岗位薪资</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1"
+                                        colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                        style="width: 200px;">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {{if list.length > 0 }}
+                                {{each list}}
                                 <tr class="gradeA odd">
-                                    <td class="sorting_1">Gecko</td>
-                                    <td class=" ">Firefox 1.0</td>
-                                    <td class=" ">Win 98+ / OSX.2+</td>
-                                    <td class="center ">1.7</td>
-                                    <td class="center ">A</td>
+                                    <td>{{$index+1}}</td>
+                                    <td><img width="50" height="50" src="http://placehold.it/50x50" alt=""></td>
+                                    <td class="sorting_1">{{$value['companyName']}}</td>
+                                    <td class=" ">{{$value['positionName']}}</td>
+                                    <td class=" ">{{$value['createTime']}}</td>
+                                    <td class="center ">{{$value['salary']}}</td>
+                                    <td> <button data-id="{{$value['_id']}}"
+                                            class="btn btn-sm btn-primary btn-update"><span class="fa fa-edit"></span>
+                                            修改</button>
+                                        <button data-id="{{$value['_id']}}"
+                                            class="btn btn-sm btn-danger btn-delete"><span class="fa fa-remove"></span>
+                                            删除</button>
+                                    </td>
+                                    </td>
                                 </tr>
+                                {{/each}}
+                                {{else}}
+                                <tr>
+                                    <td colspan="8"> 暂无数据. </td>
+                                </tr>
+                                {{/if}}
+
                             </tbody>
                         </table>
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="dataTables_info" id="dataTables-example_info" role="alert"
-                                    aria-live="polite" aria-relevant="all">Showing 1 to 10 of 57 entries</div>
                             </div>
                             <div class="col-sm-6">
+                                {{if total > 0}}
                                 <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
-                                    <ul class="pagination">
+                                    <ul class="pagination" id='pagi'>
                                         <li class="paginate_button previous disabled" aria-controls="dataTables-example"
                                             tabindex="0" id="dataTables-example_previous"><a href="#">Previous</a></li>
-                                        <li class="paginate_button active" aria-controls="dataTables-example"
-                                            tabindex="0"><a href="#">1</a></li>
+                                        {{each pageCout}}
+                                        <li data-index='{{$index}}' class="paginate_button {{if pageNo == $index}}active{{/if}}" aria-controls="dataTables-example"
+                                            tabindex="0"><a href="#">{{$value+1}}</a></li>
+                                        {{/each}}
                                         <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"
                                             id="dataTables-example_next"><a href="#">Next</a></li>
                                     </ul>
                                 </div>
+                                {{/if}}
                             </div>
                         </div>
                     </div>
