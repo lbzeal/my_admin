@@ -14,18 +14,19 @@ function loadData(pageNo, res) {
             count: COUNT
         },
         success: function (result) {
-            console.log(result);
+            console.log(result)
             if (result.ret) {
                 res.render(tableView({
-                   ...result.data,
-                   pageNo,
-                   pageCout : _.range(Math.ceil(result.data.total/COUNT)),
-                    
+                    ...result.data,
+                    showpage : true,
+                    pageNo,
+                    pageCout: _.range(Math.ceil(result.data.total / COUNT)),
+
                 }));
 
             }
             else {
-                res.go('/');
+                res.go('/home');
             }
 
 
@@ -39,11 +40,10 @@ function remove(id, res) {
     $.ajax({
         url: '/api/table/delete',
         type: 'delete',
-        data:{
+        data: {
             id
-        } ,
+        },
         success(result) {
-            console.log(result);
             if (result.ret) {
                 res.go('/tables?' + new Date().getTime());
             }
@@ -69,9 +69,44 @@ export default {
             remove($(this).attr('data-id'), res);
         })
 
-        $('#router-view').on('click','#pagi li[data-index]',function(){
-            console.log(1);
-            loadData($(this).attr('data-index'),res)
+        $('#router-view').on('click', '#pagi li[data-index]', function () {
+
+            loadData($(this).attr('data-index'), res)
+        })
+        $('#router-view').on('click', '#dataTables-example_previous', function () {
+            let index = $('#pagi li[class*="active"]').attr('data-index');
+            let to_index = index - 1;
+            if (to_index > -1) {
+                loadData(to_index, res);
+            }
+        })
+        $('#router-view').on('click', '#dataTables-example_next', function () {
+            let index = $('#pagi li[class*="active"]').attr('data-index');
+            let to_index = ~~index + 1;
+            if (to_index > -1) {
+                loadData(to_index, res);
+            }
+        })
+        $('#router-view').on('click','#possearch',function(){
+           let keywords =  $('#keywords').val();
+           $.ajax({
+               url : '/api/table/search',
+               type : 'post',
+               data : {
+                   keywords,
+               },
+               success(result)
+               {
+
+                  if(result.ret){
+                      res.render(tableView({
+                          ...result.data,
+                          showpage : false,
+                      }))
+                  }
+               }
+           })
+
         })
     },
     add(req, res) {
@@ -80,20 +115,19 @@ export default {
             res.back();
         })
         $('#possubmit').on('click', function () {
-            let data = $('#possave').serialize();
-            $.ajax({
-                url: '/api/table/save',
-                type: 'POST',
-                data,
-                success(result) {
-                    console.log(result)
-                    if (result.ret) {
-                        res.back()
-                    } else {
-                        alert(result.data.msg);
-                    }
-                }
-            })
+          $("#possave").ajaxSubmit({
+              url : '/api/table/save',
+              type : 'post',
+            //   clearForm : true,
+              success(result){
+                  console.log(result)
+                  if(result.ret){
+                    //   res.back()
+                  }else{
+
+                  }
+              }
+          })
         });
 
     },

@@ -12,13 +12,19 @@
                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button id="addbtn" class="btn btn-block btn-success"><span
+                                <button id="addbtn" class="btn btn-block btn-success" style="width: 100px;"><span
                                         class="fa fa-plus-circle"></span> 添加</button>
                             </div>
                             <div class="col-sm-6">
-                                <div id="dataTables-example_filter" class="dataTables_filter"><label>Search:<input
-                                            type="search" class="form-control input-sm"
-                                            aria-controls="dataTables-example"></label></div>
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" id="keywords" value="{{keywords}}" name="pos_search"
+                                        class="form-control pull-right" placeholder="搜索">
+
+                                    <div class="input-group-btn">
+                                        <button type="button" id="possearch" class="btn btn-default"><i
+                                                class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <table class="table table-striped table-bordered table-hover dataTable no-footer"
@@ -52,7 +58,7 @@
                                 {{each list}}
                                 <tr class="gradeA odd">
                                     <td>{{$index+1}}</td>
-                                    <td><img width="50" height="50" src="http://placehold.it/50x50" alt=""></td>
+                                    <td><img width="50" height="50" src="http://10.60.15.51:3000/uploaders/{{$value.companyLogo}}" alt=""></td>
                                     <td class="sorting_1">{{$value['companyName']}}</td>
                                     <td class=" ">{{$value['positionName']}}</td>
                                     <td class=" ">{{$value['createTime']}}</td>
@@ -79,17 +85,19 @@
                             <div class="col-sm-6">
                             </div>
                             <div class="col-sm-6">
-                                {{if total > 0}}
+                                {{if total > 0 && showpage}}
                                 <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                     <ul class="pagination" id='pagi'>
-                                        <li class="paginate_button previous disabled" aria-controls="dataTables-example"
-                                            tabindex="0" id="dataTables-example_previous"><a href="javascript:void(0)">Previous</a></li>
-                                        {{each pageCout}}
-                                        <li data-index='{{$index}}' class="paginate_button {{if pageNo == $index}}active{{/if}}" aria-controls="dataTables-example"
-                                            tabindex="0"><a href="javascript:void(0)">{{$value+1}}</a></li>
+                                        <li class="paginate_button previous " aria-controls="dataTables-example"
+                                            tabindex="0" id="dataTables-example_previous"><a href="javascript:void(0)">
+                                                <</a> </li> {{each pageCout}} <li data-index='{{$index}}'
+                                                    class="paginate_button {{if pageNo == $index}}active{{/if}}"
+                                                    aria-controls="dataTables-example" tabindex="0"><a
+                                                        href="javascript:void(0)">{{$value+1}}</a></li>
                                         {{/each}}
                                         <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"
-                                            id="dataTables-example_next"><a href="javascript:void(0)">Next</a></li>
+                                            id="dataTables-example_next" data-total='{{pageCout.length}}'><a
+                                                href="javascript:void(0)">></a></li>
                                     </ul>
                                 </div>
                                 {{/if}}

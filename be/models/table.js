@@ -3,6 +3,7 @@ const mongoose = require('../utils/db');
 //在数据库创建一个集合;
 
 const Table = mongoose.model('tabledata',{
+    companyLogo : String,
     companyName : String,
     positionName : String , 
     city : String,
@@ -31,6 +32,18 @@ module.exports = {
     },
     delete(id){
         return Table.deleteOne({_id : id})
+    },
+    search(keywords){
+        return Table.find({
+            $or : [
+                {
+                    companyName : new RegExp(keywords,'gi')
+                },
+                {
+                    positionName : new RegExp(keywords,'gi')
+                }
+            ]
+        }).sort({_id : -1})
     }
 
 }

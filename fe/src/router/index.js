@@ -12,7 +12,7 @@ import activeNav from '../utils/activeNav';
 User.render();
 
 router.use(activeNav)
-router.redirect('/home');
+router.redirect('/tables');
 router.route('/home',Home.render);
 router.route('/tables',Table.render);
 router.route('/table_add',Table.add);

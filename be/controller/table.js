@@ -13,8 +13,11 @@ module.exports = {
         }
     },
     async save(req, res, next) {
+        console.log(req.filename);
+        console.log(req.body);
         let result = await tableModel.save({
             ...req.body,
+            companyLogo : req.filename,
             createTime: moment().format('YYYY-MM-DD hh:mm:ss')
         })
         if (result) {
@@ -58,6 +61,18 @@ module.exports = {
         res.render('succ',{
             data : JSON.stringify({
                 msg : '删除数据成功',
+            })
+        })
+    },
+    async search(req,res,next)
+    {
+         res.set('content-type','application/json;charset=utf-8')
+        let { keywords } = req.body
+        let list = await tableModel.search(keywords);
+        res.render('succ',{
+            data : JSON.stringify({
+                list,
+                total : -1
             })
         })
     }
