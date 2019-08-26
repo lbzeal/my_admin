@@ -43,11 +43,25 @@ module.exports = {
         }
 
     },
-    async put (req,res,next){
-        let result = await tableModel.put({
+    async patch (req,res,next){
+        console.log(req.body)
+        console.log(req.filename)
+        console.log(req.body.companyLogo)
+        let data = {
             ...req.body,
             createTime : moment().format('YYYY-MM-DD hh:mm:ss')
-        })
+        }
+        console.log(data)
+        if( req.body.companyLogo == undefined){
+                console.log('新图片')
+            data['companyLogo'] = req.filename
+        }else if(req.body.companyLogo == ''){
+            console.log('删除属性')
+            delete data.companyLogo;
+        }
+      console.log(data);
+
+        let result = await tableModel.patch(data)
         // console.log(result)
         res.render('succ',{
             data : JSON.stringify({

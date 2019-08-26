@@ -14,7 +14,7 @@ function loadData(pageNo, res) {
             count: COUNT
         },
         success: function (result) {
-            console.log(result)
+            // console.log(result)
             if (result.ret) {
                 res.render(tableView({
                     ...result.data,
@@ -118,11 +118,11 @@ export default {
           $("#possave").ajaxSubmit({
               url : '/api/table/save',
               type : 'post',
-            //   clearForm : true,
+              clearForm : true,
               success(result){
                   console.log(result)
                   if(result.ret){
-                    //   res.back()
+                      res.back()
                   }else{
 
                   }
@@ -144,21 +144,23 @@ export default {
                     res.back();
                 })
                 $('#possubmit').on('click', () => {
-                    let data = $('#posedit').serialize();
-                    console.log(data);
-                    $.ajax({
-                        url: '/api/table/put',
-                        type: 'put',
-                        data: data + '&id=' + req.body.id,
-                        success(result) {
-                            console.log(result);
-                            if (result.ret) {
+                    $('#posedit').ajaxSubmit({
+                        url : 'api/table/patch',
+                        type : 'patch',
+                        success(result)
+                        {
+                            if(result.ret)
+                            {
                                 res.back();
-                            } else {
-                                alert(result.data.msg);
                             }
+                            else{
+
+                               alert('修改失败')
+                            }
+                           
                         }
                     })
+
                 })
             }
         });

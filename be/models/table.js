@@ -27,7 +27,7 @@ module.exports = {
     findOne(id){
         return  Table.findById(id);
     },
-    put(data){
+    patch(data){
         return Table.updateOne({_id : data.id},data);
     },
     delete(id){
