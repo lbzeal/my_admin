@@ -83,13 +83,13 @@
                                 <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                     <ul class="pagination" id='pagi'>
                                         <li class="paginate_button previous disabled" aria-controls="dataTables-example"
-                                            tabindex="0" id="dataTables-example_previous"><a href="#">Previous</a></li>
+                                            tabindex="0" id="dataTables-example_previous"><a href="javascript:void(0)">Previous</a></li>
                                         {{each pageCout}}
                                         <li data-index='{{$index}}' class="paginate_button {{if pageNo == $index}}active{{/if}}" aria-controls="dataTables-example"
-                                            tabindex="0"><a href="#">{{$value+1}}</a></li>
+                                            tabindex="0"><a href="javascript:void(0)">{{$value+1}}</a></li>
                                         {{/each}}
                                         <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0"
-                                            id="dataTables-example_next"><a href="#">Next</a></li>
+                                            id="dataTables-example_next"><a href="javascript:void(0)">Next</a></li>
                                     </ul>
                                 </div>
                                 {{/if}}

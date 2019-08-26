@@ -45,7 +45,7 @@ module.exports = {
             ...req.body,
             createTime : moment().format('YYYY-MM-DD hh:mm:ss')
         })
-
+        // console.log(result)
         res.render('succ',{
             data : JSON.stringify({
                 msg :'数据修改成功',
@@ -53,8 +53,8 @@ module.exports = {
         })
     },
     async delete(req,res,next){
-        console.log(req.body.id)
         let result = await tableModel.delete(req.body.id);
+        // console.log(result)
         res.render('succ',{
             data : JSON.stringify({
                 msg : '删除数据成功',
