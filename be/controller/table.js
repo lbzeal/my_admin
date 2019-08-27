@@ -15,6 +15,7 @@ module.exports = {
     async save(req, res, next) {
         console.log(req.filename);
         console.log(req.body);
+
         let result = await tableModel.save({
             ...req.body,
             companyLogo: req.filename,
@@ -51,13 +52,11 @@ module.exports = {
             ...req.body,
             createTime: moment().format('YYYY-MM-DD hh:mm:ss')
         }
-        console.log(data)
-        if (req.body.companyLogo == '') {
-            delete data.companyLogo;
-        } else {
+
+        if(req.filename) {
+
             data['companyLogo'] = req.filename
         }
-        console.log(data);
 
         let result = await tableModel.patch(data)
         // console.log(result)

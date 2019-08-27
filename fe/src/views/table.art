@@ -58,7 +58,12 @@
                                 {{each list}}
                                 <tr class="gradeA odd">
                                     <td>{{$index+1}}</td>
-                                    <td><img width="50" height="50" src="http://10.60.15.51:3000/uploaders/{{$value.companyLogo}}" alt=""></td>
+                                    {{if !$value.companyLogo}}
+                                    <td><!--img width="50" height="50" src="http://temp.im/46x46/4CD964/fff" alt=""--></td>
+                                    {{else}}
+                                    <td><img width="50" height="50"
+                                            src="http://10.60.15.51:3000/uploaders/{{$value.companyLogo}}" alt=""></td>
+                                    {{/if}}
                                     <td class="sorting_1">{{$value['companyName']}}</td>
                                     <td class=" ">{{$value['positionName']}}</td>
                                     <td class=" ">{{$value['createTime']}}</td>

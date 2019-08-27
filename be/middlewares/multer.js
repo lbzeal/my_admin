@@ -2,14 +2,15 @@ const multer = require('multer');
 const path = require('path');
 const strRandom = require('string-random');
 
-let filename = '';
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.resolve(__dirname, '../public/uploaders'));
     },
     filename: function (req, file, cb) {
-        filename = strRandom(8) + '-' + Date.now() + file.originalname.substr(file.originalname.lastIndexOf('.'))
+      let  filename = strRandom(8) + '-' + Date.now() + file.originalname.substr(file.originalname.lastIndexOf('.'))
+        //中间件栈传参
+        req.filename = filename;
         cb(null, filename);
 
     }
@@ -31,16 +32,17 @@ let upload = multer({
 }).single('companyLogo');
 
 module.exports = (req, res, next) => {
-    upload(req,res,function(err){
-        if(err){
-            res.render('fail',{
-                data : JSON.stringify({
-                    msg : err.message,
+    upload(req, res, function (err) {
+        if (err) {
+            res.render('fail', {
+                data: JSON.stringify({
+                    msg: err.message,
                 })
             })
-        }else{
-            //中间件栈传参
-            req.filename = filename;
+        } else {
+            if (req.body.companyLogo === '') {
+                delete req.body.companyLogo;
+            }
             next();
         }
     })
