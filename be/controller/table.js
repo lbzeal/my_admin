@@ -17,7 +17,7 @@ module.exports = {
         console.log(req.body);
         let result = await tableModel.save({
             ...req.body,
-            companyLogo : req.filename,
+            companyLogo: req.filename,
             createTime: moment().format('YYYY-MM-DD hh:mm:ss')
         })
         if (result) {
@@ -38,55 +38,52 @@ module.exports = {
         let result = await tableModel.findOne(req.body.id);
         if (result) {
             res.render('succ', {
-                data : JSON.stringify(result)
+                data: JSON.stringify(result)
             })
         }
 
     },
-    async patch (req,res,next){
+    async patch(req, res, next) {
         console.log(req.body)
         console.log(req.filename)
         console.log(req.body.companyLogo)
         let data = {
             ...req.body,
-            createTime : moment().format('YYYY-MM-DD hh:mm:ss')
+            createTime: moment().format('YYYY-MM-DD hh:mm:ss')
         }
         console.log(data)
-        if( req.body.companyLogo == undefined){
-                console.log('新图片')
-            data['companyLogo'] = req.filename
-        }else if(req.body.companyLogo == ''){
-            console.log('删除属性')
+        if (req.body.companyLogo == '') {
             delete data.companyLogo;
+        } else {
+            data['companyLogo'] = req.filename
         }
-      console.log(data);
+        console.log(data);
 
         let result = await tableModel.patch(data)
         // console.log(result)
-        res.render('succ',{
-            data : JSON.stringify({
-                msg :'数据修改成功',
+        res.render('succ', {
+            data: JSON.stringify({
+                msg: '数据修改成功',
             })
         })
     },
-    async delete(req,res,next){
+    async delete(req, res, next) {
         let result = await tableModel.delete(req.body.id);
         // console.log(result)
-        res.render('succ',{
-            data : JSON.stringify({
-                msg : '删除数据成功',
+        res.render('succ', {
+            data: JSON.stringify({
+                msg: '删除数据成功',
             })
         })
     },
-    async search(req,res,next)
-    {
-         res.set('content-type','application/json;charset=utf-8')
+    async search(req, res, next) {
+        res.set('content-type', 'application/json;charset=utf-8')
         let { keywords } = req.body
         let list = await tableModel.search(keywords);
-        res.render('succ',{
-            data : JSON.stringify({
+        res.render('succ', {
+            data: JSON.stringify({
                 list,
-                total : -1
+                total: -1
             })
         })
     }
